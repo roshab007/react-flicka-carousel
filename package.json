@@ -47,5 +47,10 @@
     "autoplay react carousel",
     "customizable react slider",
     "react horizontal scroller"
-  ]
+  ],
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.7.3",
+    "lucide-react": "^0.488.0"
+  }
 }

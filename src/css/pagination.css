@@ -1,0 +1,29 @@
+.paginationContainer {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  z-index: 10;
+  display: flex;
+  transform: translateX(-50%);
+  gap: 0.5rem;
+}
+
+.dot {
+  height: 0.625rem;
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+}
+
+.activeDot {
+  width: 2rem;
+  background-color: white;
+}
+
+.inactiveDot {
+  width: 0.625rem;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.inactiveDot:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
