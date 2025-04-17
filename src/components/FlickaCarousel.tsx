@@ -1,8 +1,10 @@
+"use client";
+
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import useCarousel from "../hooks/useCarousel";
-import { preloadImages } from "../utils/utils";
+import { useImagePreloader } from "../hooks/useImagePreloader";
 import ArrowButton from "./ArrowButton";
 import Pagination from "./Pagination";
 
@@ -83,20 +85,14 @@ const FlickaCarousel: React.FC<Props> = ({
     handleNext,
     handlePrevious,
     handleWheel,
+    handleDragStart,
+    handleDragEnd,
+    dragConstraintsRef,
   } = useCarousel({
     imagesLength: images.length,
     defaultAutoPlay: autoPlay,
   });
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    preloadImages(images)
-      .then(() => setIsLoading(false))
-      .catch((e) => {
-        console.error("failed to preload images", e);
-        setIsLoading(false);
-      });
-  }, [images]);
+  const isLoading = useImagePreloader(images);
 
   if (isLoading) {
     return (
@@ -120,6 +116,7 @@ const FlickaCarousel: React.FC<Props> = ({
         className={clsx("carouselContainer", carouselContainerClassName)}
         style={carouselContainerStyle}
         onWheel={handleWheel}
+        ref={dragConstraintsRef}
       >
         <AnimatePresence initial={false} custom={direction}>
           <motion.div
@@ -131,6 +128,11 @@ const FlickaCarousel: React.FC<Props> = ({
             exit="exit"
             style={carouselItemStyle}
             className={clsx("carouselItem", carouselItemClassName)}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.1}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
           >
             <motion.div
               style={{ width: "100%", height: "100%" }}
@@ -142,12 +144,13 @@ const FlickaCarousel: React.FC<Props> = ({
                 src={images[currentIndex]}
                 className={clsx("image", imageClassName)}
                 style={carouselImageStyle}
+                draggable={false}
               />
             </motion.div>
           </motion.div>
         </AnimatePresence>
 
-        {!hideArrowButtons && (
+        {!hideArrowButtons && images.length > 1 && (
           <>
             <ArrowButton
               variant="left"
@@ -164,7 +167,7 @@ const FlickaCarousel: React.FC<Props> = ({
           </>
         )}
 
-        {!hidePagination && (
+        {!hidePagination && images.length > 1 && (
           <Pagination
             currentIndex={currentIndex}
             images={images}
