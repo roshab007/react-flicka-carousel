@@ -26,12 +26,12 @@ yarn add react-flicka-carousel
 import FlickaCarousel from "react-flicka-carousel";
 
 const images = [
-  "https://picsum.photos/1000/500?random=1",
-  "https://picsum.photos/1000/500?random=2",
-  "https://picsum.photos/1000/500?random=3",
-  "https://picsum.photos/1000/500?random=4",
-  "https://picsum.photos/1000/500?random=5",
-  "https://picsum.photos/1000/500?random=6",
+  "https://picsum.photos/id/10/1000/500",
+  "https://picsum.photos/id/20/1000/500",
+  "https://picsum.photos/id/30/1000/500",
+  "https://picsum.photos/id/40/1000/500",
+  "https://picsum.photos/id/50/1000/500",
+  "https://picsum.photos/id/60/1000/500",
 ];
 
 const App: React.FC = () => {
