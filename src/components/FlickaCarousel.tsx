@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useCarousel from "../hooks/useCarousel";
 import { preloadImages } from "../utils/utils";
 import ArrowButton from "./ArrowButton";
@@ -87,12 +87,29 @@ const FlickaCarousel: React.FC<Props> = ({
     imagesLength: images.length,
     defaultAutoPlay: autoPlay,
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    preloadImages(images).catch((e) => {
-      console.error("failed to preload images", e);
-    });
+    preloadImages(images)
+      .then(() => setIsLoading(false))
+      .catch((e) => {
+        console.error("failed to preload images", e);
+        setIsLoading(false);
+      });
   }, [images]);
+
+  if (isLoading) {
+    return (
+      <div
+        className={clsx(
+          "container",
+          "flicka-skeleton-loader",
+          containerClassName
+        )}
+        style={containerStyle}
+      />
+    );
+  }
 
   return (
     <div

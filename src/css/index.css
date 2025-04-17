@@ -1,6 +1,7 @@
 @import url("./carousel.css");
 @import url("./arrow.css");
 @import url("./pagination.css");
+@import url("./loader.css");
 
 .container {
   overflow: hidden;
