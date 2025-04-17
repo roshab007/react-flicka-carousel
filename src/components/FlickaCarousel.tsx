@@ -34,12 +34,10 @@ interface Props {
 const variants = {
   enter: (direction: number) => ({
     x: direction > 0 ? 1000 : -1000,
-    opacity: 0,
     scale: 0.9,
   }),
   center: {
     x: 0,
-    opacity: 1,
     scale: 1,
     transition: {
       duration: 0.5,
@@ -47,7 +45,6 @@ const variants = {
   },
   exit: (direction: number) => ({
     x: direction < 0 ? 1000 : -1000,
-    opacity: 0,
     scale: 0.9,
     transition: {
       duration: 0.5,
